@@ -54,13 +54,20 @@ For Netlify or Vercel, use `npm run build` and the `dist` output directory; chan
 
 ## Content
 
-`src/passages.ts` contains exact excerpt boundaries, source/edition attribution, and original multiple-choice questions with explanations. Starter texts:
+`src/passages.ts` contains ten public-domain passages, each at least 100 words, with exact excerpt boundaries, source/edition attribution, and three original multiple-choice questions with explanations:
 
 - Lewis Carroll, *Alice’s Adventures in Wonderland* (1865), Chapter I, opening three paragraphs. Project Gutenberg #11, Millennium Fulcrum Edition 3.0.
 - Jane Austen, *Pride and Prejudice* (1813), Chapter 1, opening through “What a fine thing for our girls!” Project Gutenberg #1342; plain-text emphasis markers omitted.
 - Aesop, *The Hare and the Tortoise*, complete fable in George Fyler Townsend’s public-domain translation. Project Gutenberg #21.
+- L. Frank Baum, *The Wonderful Wizard of Oz* (1900), Chapter 1, “The Cyclone,” opening two paragraphs. Project Gutenberg #55; [verified mirror text](https://github.com/GITenberg/The-Wonderful-Wizard-of-Oz_55/blob/master/55.txt).
+- Frances Hodgson Burnett, *The Secret Garden* (1911), Chapter IX, “The Strangest House Any One Ever Lived In,” opening paragraph. Project Gutenberg #113; [verified mirror text](https://github.com/GITenberg/The-Secret-Garden_113/blob/master/113.txt).
+- Kenneth Grahame, *The Wind in the Willows* (1908), Chapter I, “The River Bank,” opening paragraph. Project Gutenberg #289; [verified mirror text](https://github.com/GITenberg/The-Wind-in-the-Willows_289/blob/master/289.txt).
+- Robert Louis Stevenson, *Treasure Island* (1883), Part One, Chapter 1, “The Old Sea-dog at the Admiral Benbow,” opening through “up at our signboard.” Project Gutenberg #120; [verified mirror text](https://github.com/GITenberg/Treasure-Island_120/blob/master/120.txt).
+- Herman Melville, *Moby-Dick; or, The Whale* (1851), Chapter 1, “Loomings,” opening paragraph. Project Gutenberg #2701; [verified mirror text](https://github.com/GITenberg/Moby-Dick--Or-The-Whale_2701/blob/master/2701.txt).
+- Louisa May Alcott, *Little Women* (1868–1869), Chapter One, “Playing Pilgrims,” opening through “all the pretty things she wanted.” Project Gutenberg #514; [verified mirror text](https://github.com/GITenberg/Little-Women_514/blob/master/514.txt).
+- Arthur Conan Doyle, *The Adventures of Sherlock Holmes* (1892), “A Scandal in Bohemia,” Section I, from “I could not help laughing” through “Read it aloud.” Project Gutenberg #1661; [verified mirror text](https://github.com/GITenberg/The-Adventures-of-Sherlock-Holmes_1661/blob/master/1661.txt).
 
-These texts and the Townsend translation are public domain in the United States; check local copyright rules before redistributing elsewhere. Excerpts were checked against the GITenberg mirrors of the Gutenberg text editions. Typography and paragraph wrapping are normalized for the screen. All question answers are supported by the displayed excerpt.
+These texts and the Townsend translation are public domain in the United States; check local copyright rules before redistributing elsewhere. The original three passages are preserved. The seven additions were checked against the linked GITenberg mirrors of Project Gutenberg’s public-domain plain-text editions, not modern copyrighted editions; direct Gutenberg downloads were unavailable during verification. Their excerpt wording matches those mirror files with whitespace normalized for the screen. The original passages retain their previously documented typography normalization. All question answers are supported by the displayed excerpt.
 
 ## Validation
 
