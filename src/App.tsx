@@ -1,28 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { passages } from './passages'
-import { countWords, readHistory, readLargeText, scoreAttempt } from './game'
-import type { Result } from './game'
+import { countWords } from './game'
+import { addResult, readHistory, readLargeText, saveHistory, saveLargeText } from './storage'
+import { isAttemptActive, transitionAttempt } from './attempt'
+import type { Attempt, AttemptAction } from './attempt'
+import Quiz from './Quiz'
+import Results from './Results'
+import Journal from './Journal'
 import PwaStatus from './PwaStatus'
 import './App.css'
 
-type Stage = 'select' | 'ready' | 'reading' | 'quiz' | 'results'
-
 export default function App() {
-  const [stage, setStage] = useState<Stage>('select')
-  const [selected, setSelected] = useState(passages[0])
-  const [answers, setAnswers] = useState<Record<number, number>>({})
+  const [attempt, setAttempt] = useState<Attempt>({ stage: 'select' })
+  const currentAttempt = useRef(attempt)
+  const { stage } = attempt
+  const selected = attempt.stage === 'select' ? passages[0] : attempt.passage
   const [history, setHistory] = useState(readHistory)
   const [largeText, setLargeText] = useState(readLargeText)
-  const [result, setResult] = useState<Result | null>(null)
   const [notice, setNotice] = useState('')
-  const started = useRef<number | null>(null)
-  const duration = useRef(0)
-  const submitted = useRef(false)
   const heading = useRef<HTMLHeadingElement>(null)
-  const active = stage === 'reading' || stage === 'quiz'
+  const active = isAttemptActive(stage)
   const words = countWords(selected.text)
   const attempted = history.some((item) => item.passageId === selected.id)
-  const complete = selected.questions.every((_, index) => answers[index] !== undefined)
 
   useEffect(() => {
     if (stage !== 'select') heading.current?.focus()
@@ -39,69 +38,54 @@ export default function App() {
     return () => window.removeEventListener('beforeunload', warn)
   }, [active])
 
-  function save(key: string, value: unknown) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value))
-    } catch {
-      setNotice('Your browser could not save this change. Results remain available for this visit only.')
+  function reportSave(saved: boolean) {
+    if (!saved) {
+      setNotice('Your browser could not save this change. It will only persist for this visit.')
     }
+  }
+
+  function dispatch(action: AttemptAction) {
+    const previous = currentAttempt.current
+    const next = transitionAttempt(previous, action)
+    if (next === previous) return null
+    // Commit synchronously so repeated events cannot submit the same attempt twice.
+    currentAttempt.current = next
+    setAttempt(next)
+    return next
   }
 
   function choose(id: string) {
     const passage = passages.find((item) => item.id === id)
     if (!passage) return
-    setSelected(passage)
-    setAnswers({})
-    setResult(null)
+    dispatch({ type: 'choose', passage })
     setNotice('')
-    started.current = null
-    submitted.current = false
-    duration.current = 0
-    setStage('ready')
   }
 
-  function start() {
-    if (started.current !== null || stage !== 'ready') return
-    started.current = performance.now()
-    setNotice('')
-    setStage('reading')
+  function start(now: number) {
+    if (dispatch({ type: 'start', now })) setNotice('')
   }
 
-  function finish() {
-    if (started.current === null) return
-    const elapsed = performance.now() - started.current
-    if (elapsed < 1000) {
+  function finish(now: number) {
+    if (currentAttempt.current.stage !== 'reading') return
+    if (!dispatch({ type: 'finish', now })) {
       setNotice('Take at least a second to read before finishing.')
       return
     }
-    duration.current = elapsed
-    started.current = null
     setNotice('')
-    setStage('quiz')
   }
 
   function submit() {
-    if (!complete || submitted.current || stage !== 'quiz') return
-    submitted.current = true
-    const correct = selected.questions.filter((question, index) => answers[index] === question.answer).length
-    const next: Result = {
-      id: crypto.randomUUID(),
-      passageId: selected.id,
-      date: new Date().toISOString(),
-      ...scoreAttempt(words, duration.current, correct, selected.questions.length),
-    }
-    const updated = [next, ...history].slice(0, 30)
+    const next = dispatch({ type: 'submit', id: crypto.randomUUID(), date: new Date().toISOString() })
+    if (next?.stage !== 'results') return
+    const updated = addResult(history, next.result)
     setHistory(updated)
-    save('between-lines-history', updated)
-    setResult(next)
-    setStage('results')
+    reportSave(saveHistory(updated))
   }
 
   function goHome() {
-    if (active && !window.confirm('Leave this attempt? Your unfinished result will not be saved.')) return
-    started.current = null
+    if (isAttemptActive(currentAttempt.current.stage) && !window.confirm('Leave this attempt? Your unfinished result will not be saved.')) return
+    dispatch({ type: 'home' })
     setNotice('')
-    setStage('select')
     window.setTimeout(() => heading.current?.focus(), 0)
   }
 
@@ -135,9 +119,9 @@ export default function App() {
               </div>
               <div className="passage-grid">
                 {passages.map((passage, index) => (
-                  <article className={`passage-card card-${index % 3}`} key={passage.id}>
+                  <article className={`passage-card card-${passage.theme}`} key={passage.id}>
                     <div className="card-top"><span className="eyebrow">{passage.difficulty}</span><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span></div>
-                    <div className="book-mark" aria-hidden="true">{passage.id === 'aesop' ? 'Æ' : passage.title[0]}</div>
+                    <div className="book-mark" aria-hidden="true">{passage.initial}</div>
                     <h3>{passage.title}</h3>
                     <p className="author">{passage.author} · {passage.year}</p>
                     <p className="card-description">{passage.description}</p>
@@ -149,27 +133,12 @@ export default function App() {
                 ))}
               </div>
             </section>
-            <section className="history" aria-labelledby="history-title">
-              <div className="section-heading">
-                <h2 id="history-title">Your reading journal</h2>
-                {history.length > 0 && <button className="text-button" onClick={() => {
-                  if (window.confirm('Clear all saved results on this device?')) {
-                    setHistory([])
-                    save('between-lines-history', [])
-                  }
-                }}>Clear history</button>}
-              </div>
-              <p className="muted">Your last 30 reads, saved on this device only. No account. No syncing.</p>
-              {history.length === 0 ? <p className="empty-history">A fresh page. Your first result will appear here.</p> : (
-                <ol className="history-list">{history.map((item) => (
-                  <li key={item.id}>
-                    <div><strong>{passages.find((passage) => passage.id === item.passageId)?.title ?? 'Previous passage'}</strong><small>{new Date(item.date).toLocaleDateString()}</small></div>
-                    <span><b>{item.wpm}</b> wpm</span>
-                    <span><b>{Math.round(item.correct / item.total * 100)}%</b> recall</span>
-                  </li>
-                ))}</ol>
-              )}
-            </section>
+            <Journal history={history} onClear={() => {
+              if (window.confirm('Clear all saved results on this device?')) {
+                setHistory([])
+                reportSave(saveHistory([]))
+              }
+            }} />
           </>
         ) : (
           <section className="game-panel" aria-label="Reading challenge">
@@ -183,10 +152,10 @@ export default function App() {
             {(stage === 'ready' || stage === 'reading') && (
               <>
                 <div className="reading-controls">
-                  <button className="button primary" onClick={start} disabled={stage === 'reading'}>{stage === 'reading' ? '● Timer running' : 'Start reading'}</button>
+                  <button className="button primary" onClick={() => start(performance.now())} disabled={stage === 'reading'}>{stage === 'reading' ? '● Timer running' : 'Start reading'}</button>
                   <label className="text-toggle"><input type="checkbox" checked={largeText} onChange={(event) => {
                     setLargeText(event.target.checked)
-                    save('between-lines-large-text', event.target.checked)
+                    reportSave(saveLargeText(event.target.checked))
                   }} /> Larger text</label>
                 </div>
                 {stage === 'ready' ? (
@@ -202,56 +171,22 @@ export default function App() {
                     <article className={`reading-text${largeText ? ' large-text' : ''}`} aria-label={selected.title}>
                       {selected.text.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                     </article>
-                    <button className="button primary end-button" onClick={finish}>End reading →</button>
+                    <button className="button primary end-button" onClick={() => finish(performance.now())}>End reading →</button>
                     <p className="muted center">Finished? The passage will disappear.</p>
                   </>
                 )}
               </>
             )}
 
-            {stage === 'quiz' && (
-              <form onSubmit={(event) => { event.preventDefault(); submit() }}>
-                <p className="quiz-intro">No peeking. Choose one answer for each question. Take your time — the clock has stopped.</p>
-                {selected.questions.map((question, index) => (
-                  <fieldset key={index}>
-                    <legend><span className="question-number">{index + 1}.</span> {question.prompt}</legend>
-                    {question.options.map((option, optionIndex) => (
-                      <label className={`answer-option${answers[index] === optionIndex ? ' chosen' : ''}`} key={option}>
-                        <input type="radio" name={`question-${index}`} value={optionIndex} checked={answers[index] === optionIndex} onChange={() => setAnswers({ ...answers, [index]: optionIndex })} required />
-                        <span>{option}</span>
-                      </label>
-                    ))}
-                  </fieldset>
-                ))}
-                <p className="muted" aria-live="polite">{Object.keys(answers).length} of {selected.questions.length} answered</p>
-                <button className="button primary" type="submit" disabled={!complete}>See my results →</button>
-              </form>
+            {attempt.stage === 'quiz' && (
+              <Quiz passage={attempt.passage} answers={attempt.answers}
+                onAnswer={(question, option) => { dispatch({ type: 'answer', question, option }) }}
+                onSubmit={submit} />
             )}
 
-            {stage === 'results' && result && (
-              <>
-                <p className="quiz-intro">Speed is only half the story. Here’s how your reading and recall came together.</p>
-                <div className="score-grid">
-                  <div className="score-card"><span className="eyebrow">READING SPEED</span><strong>{result.wpm}</strong><span>words per minute</span></div>
-                  <div className="score-card"><span className="eyebrow">COMPREHENSION</span><strong>{Math.round(result.correct / result.total * 100)}<small>%</small></strong><span>{result.correct} of {result.total} correct</span></div>
-                </div>
-                <p className="muted center">{words} words in {result.seconds.toFixed(1)} seconds. Reading speed = words ÷ minutes.<br />A personal snapshot, not a standardized assessment.</p>
-                <h2 className="review-title">Between the answers</h2>
-                {selected.questions.map((question, index) => (
-                  <article className="answer-review" key={index}>
-                    <p className={`answer-status ${answers[index] === question.answer ? 'correct' : ''}`}>{answers[index] === question.answer ? '✓ Correct' : '↳ Room to revisit'}</p>
-                    <h3>{index + 1}. {question.prompt}</h3>
-                    <p>Your answer: {question.options[answers[index]]}</p>
-                    {answers[index] !== question.answer && <p><strong>Correct answer: {question.options[question.answer]}</strong></p>}
-                    <p className="muted">{question.explanation}</p>
-                  </article>
-                ))}
-                <div className="result-actions">
-                  <button className="button primary" onClick={goHome}>Choose another passage →</button>
-                  <button className="button" onClick={() => choose(selected.id)}>Practice this passage</button>
-                </div>
-                <details className="source-note"><summary>About this excerpt</summary><p>{selected.edition}. Public domain in the United States. <a href={selected.source} target="_blank" rel="noreferrer">Read the original source ↗</a> (Internet required.)</p></details>
-              </>
+            {attempt.stage === 'results' && (
+              <Results passage={attempt.passage} answers={attempt.answers} result={attempt.result}
+                onHome={goHome} onPractice={() => choose(selected.id)} />
             )}
           </section>
         )}
