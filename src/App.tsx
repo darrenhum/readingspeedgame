@@ -151,7 +151,7 @@ export default function App() {
                 ))}
               </div>
               {categories.map((item) => (
-                <div key={item.id} id={`panel-${item.id}`} role="tabpanel" aria-labelledby={`tab-${item.id}`} hidden={category !== item.id} tabIndex={0}>
+                <div key={item.id} id={`panel-${item.id}`} role="tabpanel" aria-labelledby={`tab-${item.id}`} hidden={category !== item.id}>
                   <p className="muted category-description">{item.description}</p>
                   <div className="passage-grid">
                     {passages.filter((passage) => passage.category === item.id).map((passage, index) => (
