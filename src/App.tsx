@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { passages } from './passages'
 import { countWords, readHistory, readLargeText, scoreAttempt } from './game'
-import type { Result } from './game'
+import type { PassageCategory, Result } from './game'
 import PwaStatus from './PwaStatus'
 import './App.css'
 
 type Stage = 'select' | 'ready' | 'reading' | 'quiz' | 'results'
 
+const categories: { id: PassageCategory; label: string; description: string }[] = [
+  { id: 'informational', label: 'News & information', description: 'Original fictional news, memos, research summaries, and guides. Practise accuracy with details, instructions, and evidence — not real news or research.' },
+  { id: 'classics', label: 'Classic excerpts', description: 'Novel excerpts and a timeless fable. Enjoy the language and see what stays with you.' },
+]
+
 export default function App() {
   const [stage, setStage] = useState<Stage>('select')
+  const [category, setCategory] = useState<PassageCategory>('informational')
+  const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const [selected, setSelected] = useState(passages[0])
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [history, setHistory] = useState(readHistory)
@@ -121,7 +128,7 @@ export default function App() {
             <section className="intro">
               <p className="eyebrow">THE READING ROOM</p>
               <h1 ref={heading} tabIndex={-1}>Quick mind.<br /><em>Careful reader.</em></h1>
-              <p className="intro-copy">How fast do you read? How much stays with you?<br className="desktop-break" /> A few words from the classics. A little test of both.</p>
+              <p className="intro-copy">How fast do you read? How much stays with you?<br className="desktop-break" /> Everyday information and classic stories. A little test of both.</p>
               <div className="how-it-works" aria-label="How to play">
                 <span><b>1</b> Read a passage</span>
                 <span><b>2</b> Test your recall</span>
@@ -131,10 +138,38 @@ export default function App() {
             <section aria-labelledby="passages-title">
               <div className="section-heading">
                 <h2 id="passages-title">Pick your next read</h2>
-                <span>{passages.length} classics · No sign-up</span>
+                <span>{passages.filter((passage) => passage.category === category).length} passages · No sign-up</span>
               </div>
-              <div className="passage-grid">
-                {passages.map((passage, index) => (
+              <div className="passage-tabs" role="tablist" aria-label="Passage categories">
+                {categories.map((item, index) => (
+                  <button
+                    key={item.id}
+                    ref={(element) => { tabs.current[index] = element }}
+                    id={`tab-${item.id}`}
+                    role="tab"
+                    aria-selected={category === item.id}
+                    aria-controls={`panel-${item.id}`}
+                    tabIndex={category === item.id ? 0 : -1}
+                    onClick={() => setCategory(item.id)}
+                    onKeyDown={(event) => {
+                      let next: number
+                      if (event.key === 'ArrowRight') next = (index + 1) % categories.length
+                      else if (event.key === 'ArrowLeft') next = (index + categories.length - 1) % categories.length
+                      else if (event.key === 'Home') next = 0
+                      else if (event.key === 'End') next = categories.length - 1
+                      else return
+                      event.preventDefault()
+                      setCategory(categories[next].id)
+                      tabs.current[next]?.focus()
+                    }}
+                  >{item.label}</button>
+                ))}
+              </div>
+              {categories.map((item) => (
+                <div key={item.id} id={`panel-${item.id}`} role="tabpanel" aria-labelledby={`tab-${item.id}`} hidden={category !== item.id} tabIndex={0}>
+                  <p className="muted category-description">{item.description}</p>
+                  <div className="passage-grid">
+                {passages.filter((passage) => passage.category === item.id).map((passage, index) => (
                   <article className={`passage-card card-${index % 3}`} key={passage.id}>
                     <div className="card-top"><span className="eyebrow">{passage.difficulty}</span><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span></div>
                     <div className="book-mark" aria-hidden="true">{passage.id === 'aesop' ? 'Æ' : passage.title[0]}</div>
@@ -147,7 +182,9 @@ export default function App() {
                     </button>
                   </article>
                 ))}
-              </div>
+                  </div>
+                </div>
+              ))}
             </section>
             <section className="history" aria-labelledby="history-title">
               <div className="section-heading">
@@ -250,7 +287,7 @@ export default function App() {
                   <button className="button primary" onClick={goHome}>Choose another passage →</button>
                   <button className="button" onClick={() => choose(selected.id)}>Practice this passage</button>
                 </div>
-                <details className="source-note"><summary>About this excerpt</summary><p>{selected.edition}. Public domain in the United States. <a href={selected.source} target="_blank" rel="noreferrer">Read the original source ↗</a> (Internet required.)</p></details>
+                <details className="source-note"><summary>About this passage</summary><p>{selected.edition}.{selected.category === 'classics' && ' Public domain in the United States.'}{selected.source && <> <a href={selected.source} target="_blank" rel="noreferrer">Read the original source ↗</a> (Internet required.)</>}</p></details>
               </>
             )}
           </section>

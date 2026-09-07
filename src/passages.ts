@@ -1,8 +1,10 @@
 import type { Passage } from './game.ts'
+import { informationalPassages } from './informationalPassages.ts'
 
 export const passages: Passage[] = [
   {
     id: 'alice',
+    category: 'classics',
     title: 'Alice’s Adventures in Wonderland',
     author: 'Lewis Carroll',
     year: '1865',
@@ -38,6 +40,7 @@ There was nothing so VERY remarkable in that; nor did Alice think it so VERY muc
   },
   {
     id: 'pride',
+    category: 'classics',
     title: 'Pride and Prejudice',
     author: 'Jane Austen',
     year: '1813',
@@ -95,6 +98,7 @@ This was invitation enough.
   },
   {
     id: 'aesop',
+    category: 'classics',
     title: 'The Hare and the Tortoise',
     author: 'Aesop',
     year: '1867 translation',
@@ -128,6 +132,7 @@ Slow but steady wins the race.`,
   },
   {
     id: 'oz',
+    category: 'classics',
     title: 'The Wonderful Wizard of Oz',
     author: 'L. Frank Baum',
     year: '1900',
@@ -161,6 +166,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'secret-garden',
+    category: 'classics',
     title: 'The Secret Garden',
     author: 'Frances Hodgson Burnett',
     year: '1911',
@@ -192,6 +198,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'willows',
+    category: 'classics',
     title: 'The Wind in the Willows',
     author: 'Kenneth Grahame',
     year: '1908',
@@ -223,6 +230,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'treasure-island',
+    category: 'classics',
     title: 'Treasure Island',
     author: 'Robert Louis Stevenson',
     year: '1883',
@@ -261,6 +269,7 @@ in the high, old tottering voice that seemed to have been tuned and broken at th
   },
   {
     id: 'moby-dick',
+    category: 'classics',
     title: 'Moby-Dick; or, The Whale',
     author: 'Herman Melville',
     year: '1851',
@@ -292,6 +301,7 @@ in the high, old tottering voice that seemed to have been tuned and broken at th
   },
   {
     id: 'little-women',
+    category: 'classics',
     title: 'Little Women',
     author: 'Louisa May Alcott',
     year: '1868–1869',
@@ -333,6 +343,7 @@ Nobody spoke for a minute; then Meg said in an altered tone, "You know the reaso
   },
   {
     id: 'sherlock-holmes',
+    category: 'classics',
     title: 'The Adventures of Sherlock Holmes',
     author: 'Arthur Conan Doyle',
     year: '1892',
@@ -376,4 +387,5 @@ Nobody spoke for a minute; then Meg said in an altered tone, "You know the reaso
       },
     ],
   },
+  ...informationalPassages,
 ]

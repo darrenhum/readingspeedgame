@@ -17,6 +17,10 @@
 .section-heading { border-top: 1px solid var(--ink); padding-top: 19px; display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; }
 .section-heading h2 { font-size: 24px; margin: 0; }
 .section-heading > span { font-size: 12px; color: var(--muted); }
+.passage-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--line); }
+.passage-tabs button { min-height: 48px; padding: 12px 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; font-size: 14px; }
+.passage-tabs button[aria-selected="true"] { border-bottom-color: var(--green); background: #eaf0e5; font-weight: 700; }
+.category-description { font-size: 14px; line-height: 1.7; margin: 18px 0 24px; }
 .passage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 19px; }
 .passage-card { border: 1px solid var(--line); border-radius: 4px; padding: 23px; display: flex; flex-direction: column; }
 .card-0 { background: #eaf0e5; }

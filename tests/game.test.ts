@@ -13,8 +13,18 @@ test('scores speed separately from comprehension and bounds tiny durations', () 
   assert.equal(scoreAttempt(10, 0, 0, 3).seconds, 1)
 })
 
-test('the collection contains ten distinct passages', () => {
-  assert.equal(passages.length, 10)
+test('the collection preserves ten classics and adds four informational passages', () => {
+  assert.equal(passages.length, 14)
+  assert.deepEqual(passages.filter((passage) => passage.category === 'classics').map((passage) => passage.id), [
+    'alice', 'pride', 'aesop', 'oz', 'secret-garden', 'willows', 'treasure-island', 'moby-dick', 'little-women', 'sherlock-holmes',
+  ])
+  const informational = passages.filter((passage) => passage.category === 'informational')
+  assert.equal(informational.length, 4)
+  assert.deepEqual(informational.map((passage) => passage.difficulty), ['NEWS', 'MEMO', 'RESEARCH', 'INFORMATION'])
+  for (const passage of informational) {
+    assert.match(passage.edition, /original fictional/i)
+    assert.equal(passage.source, undefined)
+  }
   assert.equal(new Set(passages.map((passage) => passage.id)).size, passages.length)
   assert.equal(new Set(passages.map((passage) => passage.text)).size, passages.length)
 })
@@ -25,7 +35,8 @@ test('every passage has usable content and unambiguous answer indices', () => {
       assert.ok(passage[field].trim().length > 0)
     }
     assert.ok(countWords(passage.text) >= 100)
-    assert.ok(passage.source.startsWith('https://'))
+    assert.ok(['classics', 'informational'].includes(passage.category))
+    if (passage.category === 'classics') assert.ok(passage.source?.startsWith('https://'))
     assert.equal(passage.questions.length, 3)
     for (const question of passage.questions) {
       assert.ok(question.prompt.trim().length > 0)
