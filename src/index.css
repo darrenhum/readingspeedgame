@@ -1,0 +1,16 @@
+@import url('./tokens.css');
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; color: var(--ink); background: var(--paper); font-family: Arial, Helvetica, sans-serif; line-height: 1.5; }
+button, input { font: inherit; }
+button, summary, label { -webkit-tap-highlight-color: transparent; }
+button, summary { cursor: pointer; }
+button { color: inherit; }
+button:disabled { cursor: default; opacity: .55; }
+a { color: inherit; text-underline-offset: 4px; }
+:focus-visible { outline: 3px solid #246151; outline-offset: 5px; }
+h1:focus { outline: none; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { font-family: var(--serif); line-height: 1.15; }
+button, a, input, summary { touch-action: manipulation; }
+::selection { background: #e6d99e; }
