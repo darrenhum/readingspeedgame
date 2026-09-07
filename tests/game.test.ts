@@ -13,14 +13,14 @@ test('scores speed separately from comprehension and bounds tiny durations', () 
   assert.equal(scoreAttempt(10, 0, 0, 3).seconds, 1)
 })
 
-test('the collection preserves ten classics and adds four informational passages', () => {
-  assert.equal(passages.length, 14)
+test('the collection preserves ten classics and includes ten informational passages', () => {
+  assert.equal(passages.length, 20)
   assert.deepEqual(passages.filter((passage) => passage.category === 'classics').map((passage) => passage.id), [
     'alice', 'pride', 'aesop', 'oz', 'secret-garden', 'willows', 'treasure-island', 'moby-dick', 'little-women', 'sherlock-holmes',
   ])
   const informational = passages.filter((passage) => passage.category === 'informational')
-  assert.equal(informational.length, 4)
-  assert.deepEqual(informational.map((passage) => passage.difficulty), ['NEWS', 'MEMO', 'RESEARCH', 'INFORMATION'])
+  assert.equal(informational.length, 10)
+  assert.deepEqual(new Set(informational.map((passage) => passage.difficulty)), new Set(['NEWS', 'MEMO', 'RESEARCH', 'INFORMATION']))
   for (const passage of informational) {
     assert.match(passage.edition, /original fictional/i)
     assert.equal(passage.source, undefined)

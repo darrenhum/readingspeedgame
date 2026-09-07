@@ -144,4 +144,217 @@ A reading marked E is an estimate, while a reading marked A was actually taken f
       },
     ],
   },
+  {
+    id: 'news-market-shuttle',
+    category: 'informational',
+    title: 'Market Shuttle Takes a New Route',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'NEWS',
+    description: 'A transport update with temporary stops, unchanged fares, and a conditional return.',
+    edition: 'Original fictional news report written for this game; not a report of real events',
+    text: `The fictional town of Fernbridge is moving its Saturday market shuttle away from Mill Street while workers repair the bridge there. From June 8, the shuttle will use Orchard Road and stop outside the sports hall instead of beside the riverside gate. The railway station and market square stops will remain in service. The change affects the market shuttle only, not the weekday bus.
+
+Shuttles will continue to leave the station every twenty minutes between 9 a.m. and 2 p.m. Tickets will cost the same as before, and passengers will not need to book seats. The sports hall stop has a covered waiting area, but the hall itself will not open earlier for passengers.
+
+Engineers expect the repairs to take three Saturdays. However, the shuttle will return to Mill Street only after the bridge passes an inspection. The transport office will post a notice at each shuttle stop when the return date is confirmed. Traders have requested an additional late departure, but that request has not yet been approved.`,
+    questions: [
+      {
+        prompt: 'Which stop replaces the riverside gate during the repairs?',
+        options: ['The railway station', 'The sports hall', 'The market square', 'The Mill Street bridge'],
+        answer: 1,
+        explanation: 'The shuttle will stop outside the sports hall instead of beside the riverside gate.',
+      },
+      {
+        prompt: 'What must happen before the shuttle returns to Mill Street?',
+        options: ['Traders must approve a late departure.', 'The sports hall must open earlier.', 'The bridge must pass an inspection.', 'Three Saturdays must pass, regardless of the repairs.'],
+        answer: 2,
+        explanation: 'Three Saturdays is only an estimate; returning to Mill Street depends on the bridge passing an inspection.',
+      },
+      {
+        prompt: 'Which service detail remains unchanged?',
+        options: ['The ticket price', 'The riverside gate stop', 'The route through Mill Street', 'The use of the sports hall stop'],
+        answer: 0,
+        explanation: 'The report says tickets will cost the same as before, although the route and one stop will change.',
+      },
+    ],
+  },
+  {
+    id: 'news-seed-exchange',
+    category: 'informational',
+    title: 'Seed Exchange Opens at the Garden',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'NEWS',
+    description: 'A community initiative: distinguish participation rules from future plans.',
+    edition: 'Original fictional news report written for this game; not a report of real events',
+    text: `A seed exchange will open at the fictional Ashcombe community garden on March 16. The volunteer-run stall will operate on the first and third Saturdays of each month, from 10 a.m. until noon. Visitors may take up to two packets per visit without bringing seeds of their own. Organisers say this rule is intended to let new gardeners participate alongside experienced growers.
+
+Donated packets must be sealed and labelled with the plant name and the year the seeds were collected. Volunteers will check the labels before placing donations on the stall. They will not test whether the seeds will sprout, so a checked label is not a guarantee of successful growth. Packets without the required information will be set aside rather than offered to visitors.
+
+The garden association has supplied a cupboard for storing packets between sessions. A nearby school has offered to host a seed-saving workshop in autumn, but no date or instructor has been confirmed. For now, the exchange includes seeds only; tools and plant pots are outside the scheme.`,
+    questions: [
+      {
+        prompt: 'What may a visitor who brings no seeds take?',
+        options: ['One packet only after donating a pot', 'Unlimited packets at the end of a session', 'Packets only after attending a workshop', 'Up to two packets per visit'],
+        answer: 3,
+        explanation: 'Visitors may take up to two packets per visit without donating seeds, allowing new gardeners to join in.',
+      },
+      {
+        prompt: 'What does the volunteers’ packet check establish?',
+        options: ['The seeds are certain to sprout.', 'The required label information is present.', 'The seeds were collected at the community garden.', 'The plants will be ready by autumn.'],
+        answer: 1,
+        explanation: 'Volunteers check for the plant name and collection year; they do not test germination or guarantee growth.',
+      },
+      {
+        prompt: 'What has already been supplied for the exchange?',
+        options: ['An instructor for the autumn workshop', 'Plant pots for every visitor', 'A cupboard for storing packets', 'Tools for collecting seeds'],
+        answer: 2,
+        explanation: 'The garden association has supplied a storage cupboard; the workshop is unconfirmed, and tools and pots are excluded.',
+      },
+    ],
+  },
+  {
+    id: 'memo-archive-labels',
+    category: 'informational',
+    title: 'Archive Move: Label Before Packing',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'MEMO',
+    description: 'Follow a packing sequence while keeping exceptions and responsibilities straight.',
+    edition: 'Original fictional workplace memo written for this game',
+    text: `To: Staff at the fictional Wrenfield history centre
+Subject: Preparing archive boxes for the storage-room move
+
+Please finish labelling boxes by Wednesday at 4 p.m. Movers will collect them on Friday morning. Each label must show the department name, a box number, and the destination shelf code. Record the same details in the shared inventory before sealing the box. A shelf code identifies where a box belongs, not whether its contents may be discarded.
+
+Blue labels are for material going to the new storage room. Yellow labels are for files that must remain accessible at reception during the move. Do not place yellow-labelled boxes on the collection trolley. If you cannot find a destination shelf code, leave the box unsealed and ask the archive coordinator; do not guess a code from a neighbouring box.
+
+The coordinator will check the inventory on Thursday and report any missing details to the relevant department. Staff should keep original documents in their existing folders inside each box. This move does not authorise scanning, shredding, or changing access permissions. Reception files will move later, after a separate notice.`,
+    questions: [
+      {
+        prompt: 'What must staff do before sealing a box?',
+        options: ['Record its label details in the shared inventory.', 'Wait for movers to collect the trolley.', 'Scan all its original documents.', 'Move its folders to reception.'],
+        answer: 0,
+        explanation: 'The memo requires staff to record the department, box number, and shelf code in the inventory before sealing.',
+      },
+      {
+        prompt: 'Where should yellow-labelled boxes remain during the move?',
+        options: ['On the collection trolley', 'In the new storage room', 'Beside any box with a matching number', 'Accessible at reception'],
+        answer: 3,
+        explanation: 'Yellow labels identify files that must remain accessible at reception and must not go on the collection trolley.',
+      },
+      {
+        prompt: 'What should staff do when a destination shelf code is missing?',
+        options: ['Use the code from a neighbouring box.', 'Leave the box unsealed and ask the coordinator.', 'Seal the box and omit it from the inventory.', 'Replace its blue label with a yellow one.'],
+        answer: 1,
+        explanation: 'Staff are instructed to leave the box unsealed and ask the archive coordinator instead of guessing a code.',
+      },
+    ],
+  },
+  {
+    id: 'research-map-trial',
+    category: 'informational',
+    title: 'Testing a Simpler Museum Map',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'RESEARCH',
+    description: 'Interpret a comparison without confusing speed, preference, and lasting learning.',
+    edition: 'Original fictional research summary written for this game; all study details and numbers are invented',
+    text: `In a fictional study at the Hartmere museum, researchers compared two printed maps. Sixty adults visiting for the first time were randomly assigned to receive either the existing map or a simplified version. Each group contained thirty people. Participants started at the entrance and were asked to find the same three galleries in a fixed order without asking staff for directions.
+
+The simplified-map group had a median completion time of eight minutes, compared with eleven minutes for the existing-map group. The median is the middle value when the times are arranged in order; it does not mean that every participant finished within that time. Four people using the simplified map and five using the existing map entered at least one wrong gallery.
+
+The team concluded that the simplified design deserved further testing for this particular navigation task. Researchers did not ask which map visitors preferred, measure how much they learned from exhibits, or test whether they remembered routes the next day. All sessions took place on quiet weekday mornings, so the findings may not apply to crowded weekend visits.`,
+    questions: [
+      {
+        prompt: 'How were participants allocated to the two maps?',
+        options: ['They chose their preferred design.', 'They were grouped by walking speed.', 'They were randomly assigned.', 'They received maps according to arrival day.'],
+        answer: 2,
+        explanation: 'The summary explicitly states that the sixty first-time adult visitors were randomly assigned to the two maps.',
+      },
+      {
+        prompt: 'What does the eight-minute median describe?',
+        options: ['The middle completion time in the simplified-map group', 'The longest time taken by any visitor', 'The time every simplified-map user needed', 'The time saved by each visitor'],
+        answer: 0,
+        explanation: 'The median is the middle value of the ordered completion times, not a maximum or a time shared by everyone.',
+      },
+      {
+        prompt: 'Which question was not investigated in the study?',
+        options: ['How long visitors took to find the galleries', 'Whether visitors entered a wrong gallery', 'How the two map groups compared on completion time', 'Whether visitors remembered routes the next day'],
+        answer: 3,
+        explanation: 'The study measured completion times and wrong-gallery entries but did not test next-day route memory.',
+      },
+    ],
+  },
+  {
+    id: 'research-shaded-benches',
+    category: 'informational',
+    title: 'Where Do Park Visitors Sit?',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'RESEARCH',
+    description: 'An observation study separates repeated counts from individual visitors and possible causes.',
+    edition: 'Original fictional research summary written for this game; all study details and numbers are invented',
+    text: `A fictional parks team observed bench use in Alder Park before deciding where to add shade. Staff checked twelve benches at noon and at 3 p.m. on five dry days in July. Six benches were under mature trees, while six stood in open areas. At each check, observers recorded whether each bench had at least one person sitting on it. They did not count the number of people on an occupied bench.
+
+Across the sixty checks of shaded benches, forty-two found a bench occupied. Across the sixty checks of open benches, twenty-four found one occupied. These totals describe observations, not separate visitors: the same person could have been present at more than one check.
+
+The team noted that the shaded benches were also closer to the pond and farther from the main road. Because location and shade varied together, the observations could not show which feature explained the difference. Staff proposed testing temporary shade over some open benches before recommending permanent structures. No observations were made in rain or during the evening.`,
+    questions: [
+      {
+        prompt: 'What did an occupied-bench observation record?',
+        options: ['The exact number of people on a bench', 'That at least one person was sitting on a bench', 'That a new visitor had arrived at the park', 'The total time a person spent sitting'],
+        answer: 1,
+        explanation: 'Observers recorded whether a bench had at least one occupant, not the number of occupants or their sitting time.',
+      },
+      {
+        prompt: 'Why can the team not attribute the difference to shade alone?',
+        options: ['The shaded benches were checked only in the evening.', 'Observers counted people only on open benches.', 'All benches were beside the main road.', 'The shaded benches also differed in proximity to the pond and road.'],
+        answer: 3,
+        explanation: 'Shade and location varied together, so pond or road proximity could also explain the observed difference.',
+      },
+      {
+        prompt: 'What next step did staff propose?',
+        options: ['Test temporary shade over some open benches.', 'Build permanent structures immediately.', 'Remove benches near the pond.', 'Repeat observations only on the shaded benches.'],
+        answer: 0,
+        explanation: 'Staff proposed a temporary-shade test on some open benches before recommending permanent structures.',
+      },
+    ],
+  },
+  {
+    id: 'info-reservation-status',
+    category: 'informational',
+    title: 'Reading a Workshop Reservation',
+    author: 'Between the Lines',
+    year: 'Original practice',
+    difficulty: 'INFORMATION',
+    description: 'Decode a booking status, an offer deadline, and the limits of a waiting-list entry.',
+    edition: 'Original fictional service guide written for this game; booking rules and examples are invented',
+    text: `This guide explains reservation messages from the fictional Elmshore craft centre. A message marked Received means that the centre has logged a request; it does not guarantee a place. A message marked Confirmed gives the workshop date, start time, and room. Only a confirmed reservation allows a visitor to attend. A Waiting list message means that the session is full and the request is queued.
+
+When someone cancels, staff offer the place to the earliest waiting request for that same session. The offer states a reply deadline. If the visitor accepts before that deadline, staff send a confirmation. If no reply arrives in time, the offer expires and passes to the next request. Being on a waiting list does not automatically reserve a place in another session.
+
+For example, a place offered at 10 a.m. on Tuesday with a deadline of noon on Wednesday must be accepted by Wednesday noon, not by the workshop's starting time. Visitors who no longer want a place should withdraw their request so others can receive offers sooner. These messages concern attendance only; materials charges, if any, appear in a separate notice.`,
+    questions: [
+      {
+        prompt: 'Which message guarantees that a visitor has a place?',
+        options: ['Received', 'Waiting list', 'Confirmed', 'An unanswered offer'],
+        answer: 2,
+        explanation: 'Only a Confirmed reservation allows attendance; a received request, waiting-list entry, or unanswered offer does not.',
+      },
+      {
+        prompt: 'When must the example offer be accepted?',
+        options: ['Before the workshop starts', 'By noon on Wednesday', 'By 10 a.m. on Wednesday', 'By noon on Tuesday'],
+        answer: 1,
+        explanation: 'The example explicitly sets Wednesday noon as the acceptance deadline, regardless of the workshop starting time.',
+      },
+      {
+        prompt: 'What happens when an offer expires without a reply?',
+        options: ['The visitor is automatically confirmed.', 'The visitor gets a place in another session.', 'The centre cancels the whole workshop.', 'The offer passes to the next waiting request.'],
+        answer: 3,
+        explanation: 'An unanswered offer expires at the deadline and passes to the next request for the same session.',
+      },
+    ],
+  },
 ]

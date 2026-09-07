@@ -56,12 +56,18 @@ For Netlify or Vercel, use `npm run build` and the `dist` output directory; chan
 
 ## Content
 
-`src/informationalPassages.ts` contains four original fictional practice texts, each at least 100 words, with three questions and explanations grounded in the displayed text:
+`src/informationalPassages.ts` contains ten original fictional practice texts, each at least 100 words, with three questions and explanations grounded in the displayed text:
 
 - **Library Extends Evening Hours** — news: scope, evidence for a decision, and confirmed versus proposed changes.
 - **Shared Equipment: Booking Update** — memo: deadlines, existing-booking exceptions, and reporting missing equipment.
 - **Do Reminder Cards Help?** — research summary: measurement, self-selection, and the limits of causal claims.
 - **Understanding a Water-Use Notice** — information guide: quantities, comparisons, and estimated readings.
+- **Market Shuttle Takes a New Route** — news: temporary stops, unchanged fares, and conditions for restoring a route.
+- **Seed Exchange Opens at the Garden** — news: participation rules, label checks, and unconfirmed workshop plans.
+- **Archive Move: Label Before Packing** — memo: packing sequence, reception-file exceptions, and missing shelf codes.
+- **Testing a Simpler Museum Map** — research summary: random assignment, median times, and unmeasured outcomes.
+- **Where Do Park Visitors Sit?** — research summary: repeated observations, alternative explanations, and follow-up testing.
+- **Reading a Workshop Reservation** — information guide: booking statuses, reply deadlines, and waiting-list offers.
 
 These are invented scenarios, not real news, published research, or actual service instructions. Their attribution identifies them as original fictional content, without external source links or public-domain claims. All passages are bundled for offline play.
 
