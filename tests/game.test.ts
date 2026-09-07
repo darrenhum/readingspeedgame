@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { countWords, readHistory, readLargeText, scoreAttempt } from '../src/game.ts'
+import { countWords, scoreAttempt } from '../src/game.ts'
+import { readHistory, readLargeText } from '../src/storage.ts'
 import { passages } from '../src/passages.ts'
 
 test('counts whitespace-delimited words without counting empty text', () => {
