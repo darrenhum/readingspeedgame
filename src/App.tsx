@@ -61,14 +61,12 @@ export default function App() {
     setNotice('')
   }
 
-  function start() {
-    const now = performance.now()
+  function start(now: number) {
     if (dispatch({ type: 'start', now })) setNotice('')
   }
 
-  function finish() {
+  function finish(now: number) {
     if (currentAttempt.current.stage !== 'reading') return
-    const now = performance.now()
     if (!dispatch({ type: 'finish', now })) {
       setNotice('Take at least a second to read before finishing.')
       return
@@ -121,9 +119,9 @@ export default function App() {
               </div>
               <div className="passage-grid">
                 {passages.map((passage, index) => (
-                  <article className={`passage-card card-${index}`} key={passage.id}>
+                  <article className={`passage-card card-${passage.theme}`} key={passage.id}>
                     <div className="card-top"><span className="eyebrow">{passage.difficulty}</span><span aria-hidden="true">0{index + 1}</span></div>
-                    <div className="book-mark" aria-hidden="true">{['A', 'P', 'Æ'][index]}</div>
+                    <div className="book-mark" aria-hidden="true">{passage.initial}</div>
                     <h3>{passage.title}</h3>
                     <p className="author">{passage.author} · {passage.year}</p>
                     <p className="card-description">{passage.description}</p>
@@ -154,7 +152,7 @@ export default function App() {
             {(stage === 'ready' || stage === 'reading') && (
               <>
                 <div className="reading-controls">
-                  <button className="button primary" onClick={start} disabled={stage === 'reading'}>{stage === 'reading' ? '● Timer running' : 'Start reading'}</button>
+                  <button className="button primary" onClick={() => start(performance.now())} disabled={stage === 'reading'}>{stage === 'reading' ? '● Timer running' : 'Start reading'}</button>
                   <label className="text-toggle"><input type="checkbox" checked={largeText} onChange={(event) => {
                     setLargeText(event.target.checked)
                     reportSave(saveLargeText(event.target.checked))
@@ -173,7 +171,7 @@ export default function App() {
                     <article className={`reading-text${largeText ? ' large-text' : ''}`} aria-label={selected.title}>
                       {selected.text.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                     </article>
-                    <button className="button primary end-button" onClick={finish}>End reading →</button>
+                    <button className="button primary end-button" onClick={() => finish(performance.now())}>End reading →</button>
                     <p className="muted center">Finished? The passage will disappear.</p>
                   </>
                 )}

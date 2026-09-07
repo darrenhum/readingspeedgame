@@ -3,6 +3,8 @@ import type { Passage } from './game.ts'
 export const passages: Passage[] = [
   {
     id: 'alice',
+    initial: 'A',
+    theme: 'sage',
     title: 'Alice’s Adventures in Wonderland',
     author: 'Lewis Carroll',
     year: '1865',
@@ -38,6 +40,8 @@ There was nothing so VERY remarkable in that; nor did Alice think it so VERY muc
   },
   {
     id: 'pride',
+    initial: 'P',
+    theme: 'rose',
     title: 'Pride and Prejudice',
     author: 'Jane Austen',
     year: '1813',
@@ -95,6 +99,8 @@ This was invitation enough.
   },
   {
     id: 'aesop',
+    initial: 'Æ',
+    theme: 'sand',
     title: 'The Hare and the Tortoise',
     author: 'Aesop',
     year: '1867 translation',

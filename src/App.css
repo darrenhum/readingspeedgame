@@ -19,9 +19,9 @@
 .section-heading > span { font-size: 12px; color: var(--muted); }
 .passage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 19px; }
 .passage-card { border: 1px solid var(--line); border-radius: 4px; padding: 23px; display: flex; flex-direction: column; }
-.card-0 { background: #eaf0e5; }
-.card-1 { background: #f0e7df; }
-.card-2 { background: #eeeada; }
+.card-sage { background: #eaf0e5; }
+.card-rose { background: #f0e7df; }
+.card-sand { background: #eeeada; }
 .card-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
 .book-mark { font: italic 72px var(--serif); height: 110px; display: flex; align-items: center; justify-content: center; margin: 12px 0; text-shadow: 3px 3px 0 #ffffff80; }
 .passage-card h3 { font-size: 27px; letter-spacing: -.6px; margin-bottom: 8px; }

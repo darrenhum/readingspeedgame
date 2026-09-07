@@ -17,6 +17,8 @@ test('scores speed separately from comprehension and bounds tiny durations', () 
 test('every passage has usable content and unambiguous answer indices', () => {
   assert.equal(new Set(passages.map((passage) => passage.id)).size, passages.length)
   for (const passage of passages) {
+    assert.ok(passage.initial.length > 0)
+    assert.ok(['sage', 'rose', 'sand'].includes(passage.theme))
     assert.ok(countWords(passage.text) >= 100)
     assert.ok(passage.source.startsWith('https://'))
     assert.equal(passage.questions.length, 3)

@@ -8,6 +8,8 @@ export type Question = {
 export type Passage = {
   id: string
   title: string
+  initial: string
+  theme: 'sage' | 'rose' | 'sand'
   author: string
   year: string
   difficulty: string
