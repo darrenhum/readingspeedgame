@@ -24,7 +24,9 @@ The service worker is enabled in production builds, not the development server. 
 
 ## Play
 
-Choose a classic, press **Start reading** to reveal its excerpt, and press **End reading** below the text to hide it and stop timing. Answer all three questions before submitting. Results show words per minute, comprehension accuracy, and answer explanations separately.
+Choose **News & information** or **Classic excerpts**, then choose a passage. The informational tab opens by default and includes fictional news, workplace memos, research summaries, and guides focused on accurate understanding. Use the arrow keys or Home/End to switch tabs with the keyboard. Returning from an attempt keeps your chosen category.
+
+Press **Start reading** to reveal the passage, and press **End reading** below the text to hide it and stop timing. Answer all three questions before submitting. Results show words per minute, comprehension accuracy, and answer explanations separately. Both categories share the same reading journal.
 
 Timing uses a monotonic clock and continues in background tabs. Attempts shorter than one second cannot be submitted. Word counts use whitespace-delimited tokens (hyphenated words count as one). Repeated passages are labeled as practice: results are personal snapshots, not standardized assessments.
 
@@ -53,6 +55,21 @@ The workflow uses narrowly scoped deployment permissions and pinned action revis
 For Netlify or Vercel, use `npm run build` and the `dist` output directory; change `base` in `vite.config.ts` to `/` when hosting at the domain root.
 
 ## Content
+
+`src/informationalPassages.ts` contains ten original fictional practice texts, each at least 100 words, with three questions and explanations grounded in the displayed text:
+
+- **Library Extends Evening Hours** — news: scope, evidence for a decision, and confirmed versus proposed changes.
+- **Shared Equipment: Booking Update** — memo: deadlines, existing-booking exceptions, and reporting missing equipment.
+- **Do Reminder Cards Help?** — research summary: measurement, self-selection, and the limits of causal claims.
+- **Understanding a Water-Use Notice** — information guide: quantities, comparisons, and estimated readings.
+- **Market Shuttle Takes a New Route** — news: temporary stops, unchanged fares, and conditions for restoring a route.
+- **Seed Exchange Opens at the Garden** — news: participation rules, label checks, and unconfirmed workshop plans.
+- **Archive Move: Label Before Packing** — memo: packing sequence, reception-file exceptions, and missing shelf codes.
+- **Testing a Simpler Museum Map** — research summary: random assignment, median times, and unmeasured outcomes.
+- **Where Do Park Visitors Sit?** — research summary: repeated observations, alternative explanations, and follow-up testing.
+- **Reading a Workshop Reservation** — information guide: booking statuses, reply deadlines, and waiting-list offers.
+
+These are invented scenarios, not real news, published research, or actual service instructions. Their attribution identifies them as original fictional content, without external source links or public-domain claims. All passages are bundled for offline play.
 
 `src/passages.ts` contains ten public-domain passages, each at least 100 words, with exact excerpt boundaries, source/edition attribution, and three original multiple-choice questions with explanations:
 

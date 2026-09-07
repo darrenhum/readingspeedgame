@@ -5,8 +5,11 @@ export type Question = {
   explanation: string
 }
 
+export type PassageCategory = 'informational' | 'classics'
+
 export type Passage = {
   id: string
+  category: PassageCategory
   title: string
   initial: string
   theme: 'sage' | 'rose' | 'sand'
@@ -14,7 +17,7 @@ export type Passage = {
   year: string
   difficulty: string
   description: string
-  source: string
+  source?: string
   edition: string
   text: string
   questions: Question[]

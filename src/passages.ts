@@ -1,8 +1,10 @@
 import type { Passage } from './game.ts'
+import { informationalPassages } from './informationalPassages.ts'
 
 export const passages: Passage[] = [
   {
     id: 'alice',
+    category: 'classics',
     initial: 'A',
     theme: 'sage',
     title: 'Alice’s Adventures in Wonderland',
@@ -40,6 +42,7 @@ There was nothing so VERY remarkable in that; nor did Alice think it so VERY muc
   },
   {
     id: 'pride',
+    category: 'classics',
     initial: 'P',
     theme: 'rose',
     title: 'Pride and Prejudice',
@@ -99,6 +102,7 @@ This was invitation enough.
   },
   {
     id: 'aesop',
+    category: 'classics',
     initial: 'Æ',
     theme: 'sand',
     title: 'The Hare and the Tortoise',
@@ -134,6 +138,7 @@ Slow but steady wins the race.`,
   },
   {
     id: 'oz',
+    category: 'classics',
     initial: 'O',
     theme: 'sand',
     title: 'The Wonderful Wizard of Oz',
@@ -169,6 +174,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'secret-garden',
+    category: 'classics',
     initial: 'S',
     theme: 'rose',
     title: 'The Secret Garden',
@@ -202,6 +208,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'willows',
+    category: 'classics',
     initial: 'W',
     theme: 'sage',
     title: 'The Wind in the Willows',
@@ -235,6 +242,7 @@ When Dorothy stood in the doorway and looked around, she could see nothing but t
   },
   {
     id: 'treasure-island',
+    category: 'classics',
     initial: 'T',
     theme: 'sand',
     title: 'Treasure Island',
@@ -275,6 +283,7 @@ in the high, old tottering voice that seemed to have been tuned and broken at th
   },
   {
     id: 'moby-dick',
+    category: 'classics',
     initial: 'M',
     theme: 'sage',
     title: 'Moby-Dick; or, The Whale',
@@ -308,6 +317,7 @@ in the high, old tottering voice that seemed to have been tuned and broken at th
   },
   {
     id: 'little-women',
+    category: 'classics',
     initial: 'L',
     theme: 'rose',
     title: 'Little Women',
@@ -351,6 +361,7 @@ Nobody spoke for a minute; then Meg said in an altered tone, "You know the reaso
   },
   {
     id: 'sherlock-holmes',
+    category: 'classics',
     initial: 'S',
     theme: 'sand',
     title: 'The Adventures of Sherlock Holmes',
@@ -396,4 +407,5 @@ Nobody spoke for a minute; then Meg said in an altered tone, "You know the reaso
       },
     ],
   },
+  ...informationalPassages,
 ]

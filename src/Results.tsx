@@ -33,7 +33,7 @@ export default function Results({ passage, answers, result, onHome, onPractice }
         <button className="button primary" onClick={onHome}>Choose another passage →</button>
         <button className="button" onClick={onPractice}>Practice this passage</button>
       </div>
-      <details className="source-note"><summary>About this excerpt</summary><p>{passage.edition}. Public domain in the United States. <a href={passage.source} target="_blank" rel="noreferrer">Read the original source ↗</a> (Internet required.)</p></details>
+      <details className="source-note"><summary>About this passage</summary><p>{passage.edition}.{passage.category === 'classics' && ' Public domain in the United States.'}{passage.source && <> <a href={passage.source} target="_blank" rel="noreferrer">Read the original source ↗</a> (Internet required.)</>}</p></details>
     </>
   )
 }
