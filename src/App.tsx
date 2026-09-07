@@ -135,9 +135,9 @@ export default function App() {
               </div>
               <div className="passage-grid">
                 {passages.map((passage, index) => (
-                  <article className={`passage-card card-${index}`} key={passage.id}>
-                    <div className="card-top"><span className="eyebrow">{passage.difficulty}</span><span aria-hidden="true">0{index + 1}</span></div>
-                    <div className="book-mark" aria-hidden="true">{['A', 'P', 'Æ'][index]}</div>
+                  <article className={`passage-card card-${index % 3}`} key={passage.id}>
+                    <div className="card-top"><span className="eyebrow">{passage.difficulty}</span><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span></div>
+                    <div className="book-mark" aria-hidden="true">{passage.id === 'aesop' ? 'Æ' : passage.title[0]}</div>
                     <h3>{passage.title}</h3>
                     <p className="author">{passage.author} · {passage.year}</p>
                     <p className="card-description">{passage.description}</p>
