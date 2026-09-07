@@ -88,6 +88,8 @@ These texts and the Townsend translation are public domain in the United States;
 
 ## Validation
 
-`npm test` uses Node's built-in test runner to check scoring, word counts, passage structure, and resilient storage loading. `npm run lint` uses the scaffold's Oxlint configuration; `npm run build` type-checks and generates the production PWA.
+`npm test` uses Node's built-in test runner to check scoring, word counts, passage structure, attempt transitions (including duplicate actions and the active-attempt update guard), and resilient storage reads/writes. `npm run lint` uses the scaffold's Oxlint configuration; `npm run build` strictly type-checks the application, build configuration, and tests, then generates the production PWA.
+
+`src/attempt.ts` owns pure attempt transitions; App applies them synchronously before rendering to prevent duplicate submissions. `src/storage.ts` owns persistence keys, validation, and the history limit. Quiz, results, and journal components render those states without owning persistence or timing. Passage initials and card themes are explicit metadata, independent of list order.
 
 Browser checks should cover the full reading → quiz → results flow, keyboard focus and radio navigation, mobile widths, persistence after reload, blocked storage, offline reload after caching, and updating only between attempts. Test installation on a physical iOS/Android device before a broad launch.

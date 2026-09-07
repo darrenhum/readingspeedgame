@@ -4,6 +4,8 @@ export const informationalPassages: Passage[] = [
   {
     id: 'news-library-hours',
     category: 'informational',
+    initial: 'L',
+    theme: 'sage',
     title: 'Library Extends Evening Hours',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -39,6 +41,8 @@ Study desks, computers, and the borrowing desk will be available throughout the 
   {
     id: 'memo-equipment-bookings',
     category: 'informational',
+    initial: 'S',
+    theme: 'rose',
     title: 'Shared Equipment: Booking Update',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -77,6 +81,8 @@ Return each item to the labelled cupboard and mark it returned in the calendar. 
   {
     id: 'research-reminder-trial',
     category: 'informational',
+    initial: 'D',
+    theme: 'sand',
     title: 'Do Reminder Cards Help?',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -112,6 +118,8 @@ The results suggest that reminder cards may be worth testing further, but they d
   {
     id: 'info-water-meter',
     category: 'informational',
+    initial: 'U',
+    theme: 'sage',
     title: 'Understanding a Water-Use Notice',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -147,6 +155,8 @@ A reading marked E is an estimate, while a reading marked A was actually taken f
   {
     id: 'news-market-shuttle',
     category: 'informational',
+    initial: 'M',
+    theme: 'rose',
     title: 'Market Shuttle Takes a New Route',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -182,6 +192,8 @@ Engineers expect the repairs to take three Saturdays. However, the shuttle will 
   {
     id: 'news-seed-exchange',
     category: 'informational',
+    initial: 'S',
+    theme: 'sand',
     title: 'Seed Exchange Opens at the Garden',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -217,6 +229,8 @@ The garden association has supplied a cupboard for storing packets between sessi
   {
     id: 'memo-archive-labels',
     category: 'informational',
+    initial: 'A',
+    theme: 'sage',
     title: 'Archive Move: Label Before Packing',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -255,6 +269,8 @@ The coordinator will check the inventory on Thursday and report any missing deta
   {
     id: 'research-map-trial',
     category: 'informational',
+    initial: 'T',
+    theme: 'rose',
     title: 'Testing a Simpler Museum Map',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -290,6 +306,8 @@ The team concluded that the simplified design deserved further testing for this 
   {
     id: 'research-shaded-benches',
     category: 'informational',
+    initial: 'W',
+    theme: 'sand',
     title: 'Where Do Park Visitors Sit?',
     author: 'Between the Lines',
     year: 'Original practice',
@@ -325,6 +343,8 @@ The team noted that the shaded benches were also closer to the pond and farther 
   {
     id: 'info-reservation-status',
     category: 'informational',
+    initial: 'R',
+    theme: 'sage',
     title: 'Reading a Workshop Reservation',
     author: 'Between the Lines',
     year: 'Original practice',

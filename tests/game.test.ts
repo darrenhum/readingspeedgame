@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { countWords, readHistory, readLargeText, scoreAttempt } from '../src/game.ts'
+import { countWords, scoreAttempt } from '../src/game.ts'
+import { readHistory, readLargeText } from '../src/storage.ts'
 import { passages } from '../src/passages.ts'
 
 test('counts whitespace-delimited words without counting empty text', () => {
@@ -34,6 +35,8 @@ test('every passage has usable content and unambiguous answer indices', () => {
     for (const field of ['id', 'title', 'author', 'year', 'difficulty', 'description', 'edition'] as const) {
       assert.ok(passage[field].trim().length > 0)
     }
+    assert.ok(passage.initial.length > 0)
+    assert.ok(['sage', 'rose', 'sand'].includes(passage.theme))
     assert.ok(countWords(passage.text) >= 100)
     assert.ok(['classics', 'informational'].includes(passage.category))
     if (passage.category === 'classics') assert.ok(passage.source?.startsWith('https://'))
