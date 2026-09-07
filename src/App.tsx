@@ -40,7 +40,7 @@ export default function App() {
 
   function reportSave(saved: boolean) {
     if (!saved) {
-      setNotice('Your browser could not save this change. Results remain available for this visit only.')
+      setNotice('Your browser could not save this change. It will only persist for this visit.')
     }
   }
 
