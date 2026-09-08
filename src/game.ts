@@ -31,6 +31,8 @@ export type Result = {
   wpm: number
   correct: number
   total: number
+  readingType?: 'first' | 'practice'
+  challengeDay?: string
 }
 
 export const countWords = (text: string) => text.trim().split(/\s+/u).filter(Boolean).length

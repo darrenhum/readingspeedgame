@@ -30,7 +30,23 @@ Press **Start reading** to reveal the passage, and press **End reading** below t
 
 Timing uses a monotonic clock and continues in background tabs. Attempts shorter than one second cannot be submitted. Word counts use whitespace-delimited tokens (hyphenated words count as one). Repeated passages are labeled as practice: results are personal snapshots, not standardized assessments.
 
-The latest 30 results and larger-text preference are saved in local storage, on this browser/device only. Clearing browser data removes them. Storage restrictions do not prevent playing. Unfinished attempts are not saved.
+The latest 30 results, completed passage IDs, daily challenge state, and larger-text preference are saved in local storage, on this browser/device only. Clearing browser data removes them. Storage restrictions do not prevent playing. Unfinished attempts are not saved.
+
+### Daily reading challenge
+
+Choose **Choose daily challenge** in the reading room to play the day's featured passage. The selection rotates deterministically through the bundled collection using your local calendar date and refreshes at midnight or when you return to the tab. It works offline; devices with the same app version and calendar date feature the same passage.
+
+Submit all quiz answers to complete the challenge; any score counts. Ordinary passage selection does not mark a daily challenge complete. Replaying a daily challenge does not count twice. A challenge selected before midnight and submitted afterward credits its original challenge date, without changing the passage mid-attempt.
+
+Streak tracking is optional and off by default. Enable **Track my daily streak on this device** to count consecutive completed challenge days. Today's completion counts if you enable tracking afterward. Yesterday's streak remains current until today ends; missing a day resets it. Turning tracking off resets the streak but preserves the latest challenge completion.
+
+### Progress charts
+
+The reading journal charts reading speed and comprehension side by side for the latest 30 saved reads, oldest to newest by attempt rather than elapsed time. First reads use circles and solid lines; repeat practice uses squares and dashed lines. Both metrics have their own labeled scales; faster reading is not necessarily improvement if comprehension falls. Different passages vary in difficulty, so these are personal trends, not standardized comparisons.
+
+Completed passage IDs are retained beyond the 30-result limit so future repeats remain practice. Results saved before reading-type tracking are shown as unclassified rather than guessed to be first reads. An expandable **View progress data table** provides the date, passage, reading type, and exact values for every plotted point, including single-result histories.
+
+**Clear history** clears results, first-read tracking, daily completions, and streaks after confirmation. It preserves the larger-text and streak opt-in preferences. Clearing data resets what this device knows about previous reads; there is no account, server, or cross-device syncing.
 
 ## Install and offline play
 
@@ -88,8 +104,8 @@ These texts and the Townsend translation are public domain in the United States;
 
 ## Validation
 
-`npm test` uses Node's built-in test runner to check scoring, word counts, passage structure, attempt transitions (including duplicate actions and the active-attempt update guard), and resilient storage reads/writes. `npm run lint` uses the scaffold's Oxlint configuration; `npm run build` strictly type-checks the application, build configuration, and tests, then generates the production PWA.
+`npm test` uses Node's built-in test runner to check scoring, word counts, passage structure, attempt transitions (including duplicate actions and the active-attempt update guard), daily selection and streak boundaries, progress classification, and resilient storage reads/writes. `npm run lint` uses the scaffold's Oxlint configuration; `npm run build` strictly type-checks the application, build configuration, and tests, then generates the production PWA.
 
 `src/attempt.ts` owns pure attempt transitions; App applies them synchronously before rendering to prevent duplicate submissions. `src/storage.ts` owns persistence keys, validation, and the history limit. Quiz, results, and journal components render those states without owning persistence or timing. Passage initials and card themes are explicit metadata, independent of list order.
 
-Browser checks should cover the full reading → quiz → results flow, keyboard focus and radio navigation, mobile widths, persistence after reload, blocked storage, offline reload after caching, and updating only between attempts. Test installation on a physical iOS/Android device before a broad launch.
+Browser checks should cover the full reading → quiz → results flow, daily completion and replay, optional streaks, first-read versus practice charts and their data table, keyboard focus and radio navigation, mobile widths, persistence after reload, blocked storage, offline reload after caching, and updating only between attempts. Test installation on a physical iOS/Android device before a broad launch.

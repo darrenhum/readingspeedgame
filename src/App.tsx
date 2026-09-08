@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { passages } from './passages'
 import { countWords } from './game'
-import { addResult, readHistory, readLargeText, saveHistory, saveLargeText } from './storage'
+import { addResult, readDaily, readHistory, readLargeText, readPassageIds, saveDaily, saveHistory, saveLargeText, savePassageIds } from './storage'
+import { completeDaily, emptyDailyState, setStreakTracking } from './daily'
 import { isAttemptActive, transitionAttempt } from './attempt'
 import type { Attempt, AttemptAction } from './attempt'
 import type { PassageCategory } from './game'
 import Quiz from './Quiz'
 import Results from './Results'
 import Journal from './Journal'
+import DailyChallenge from './DailyChallenge'
 import PwaStatus from './PwaStatus'
 import './App.css'
 
@@ -24,12 +26,14 @@ export default function App() {
   const { stage } = attempt
   const selected = attempt.stage === 'select' ? passages[0] : attempt.passage
   const [history, setHistory] = useState(readHistory)
+  const [readIds, setReadIds] = useState(() => readPassageIds(history))
+  const [daily, setDaily] = useState(readDaily)
   const [largeText, setLargeText] = useState(readLargeText)
   const [notice, setNotice] = useState('')
   const heading = useRef<HTMLHeadingElement>(null)
   const active = isAttemptActive(stage)
   const words = countWords(selected.text)
-  const attempted = history.some((item) => item.passageId === selected.id)
+  const attempted = readIds.includes(selected.id)
 
   useEffect(() => {
     if (stage !== 'select') heading.current?.focus()
@@ -62,10 +66,10 @@ export default function App() {
     return next
   }
 
-  function choose(id: string) {
+  function choose(id: string, challengeDay?: string) {
     const passage = passages.find((item) => item.id === id)
     if (!passage) return
-    dispatch({ type: 'choose', passage })
+    dispatch({ type: 'choose', passage, challengeDay })
     setNotice('')
   }
 
@@ -83,11 +87,24 @@ export default function App() {
   }
 
   function submit() {
-    const next = dispatch({ type: 'submit', id: crypto.randomUUID(), date: new Date().toISOString() })
+    const previous = currentAttempt.current
+    if (previous.stage !== 'quiz') return
+    const next = dispatch({
+      type: 'submit', id: crypto.randomUUID(), date: new Date().toISOString(),
+      readingType: readIds.includes(previous.passage.id) ? 'practice' : 'first',
+    })
     if (next?.stage !== 'results') return
     const updated = addResult(history, next.result)
     setHistory(updated)
     reportSave(saveHistory(updated))
+    const updatedIds = [...new Set([...readIds, next.result.passageId])]
+    setReadIds(updatedIds)
+    reportSave(savePassageIds(updatedIds))
+    if (next.result.challengeDay) {
+      const updatedDaily = completeDaily(daily, next.result.challengeDay)
+      setDaily(updatedDaily)
+      reportSave(saveDaily(updatedDaily))
+    }
   }
 
   function goHome() {
@@ -120,6 +137,11 @@ export default function App() {
                 <span><b>3</b> Find your rhythm</span>
               </div>
             </section>
+            <DailyChallenge daily={daily} onChoose={choose} onTracking={(enabled, day) => {
+              const updated = setStreakTracking(daily, enabled, day)
+              setDaily(updated)
+              reportSave(saveDaily(updated))
+            }} />
             <section aria-labelledby="passages-title">
               <div className="section-heading">
                 <h2 id="passages-title">Pick your next read</h2>
@@ -163,7 +185,7 @@ export default function App() {
                         <p className="card-description">{passage.description}</p>
                         <p className="metadata">{countWords(passage.text)} words <span>·</span> {passage.questions.length} questions</p>
                         <button className="button" onClick={() => choose(passage.id)}>
-                          {history.some((result) => result.passageId === passage.id) ? 'Read again · Practice' : 'Choose passage'} <span aria-hidden="true">↗</span>
+                          {readIds.includes(passage.id) ? 'Read again · Practice' : 'Choose passage'} <span aria-hidden="true">↗</span>
                         </button>
                       </article>
                     ))}
@@ -172,9 +194,14 @@ export default function App() {
               ))}
             </section>
             <Journal history={history} onClear={() => {
-              if (window.confirm('Clear all saved results on this device?')) {
+              if (window.confirm('Clear all saved results, daily completions, and streaks on this device? This also resets first-read tracking.')) {
                 setHistory([])
+                setReadIds([])
+                const clearedDaily = { ...emptyDailyState(), tracking: daily.tracking }
+                setDaily(clearedDaily)
                 reportSave(saveHistory([]))
+                reportSave(savePassageIds([]))
+                reportSave(saveDaily(clearedDaily))
               }
             }} />
           </>
@@ -186,6 +213,8 @@ export default function App() {
             </div>
             <h1 ref={heading} tabIndex={-1}>{stage === 'quiz' ? 'What stayed with you?' : stage === 'results' ? 'A read well spent.' : selected.title}</h1>
             <p className="muted">{selected.author} · {words} words · {selected.questions.length} questions</p>
+            {attempt.stage !== 'results' && attempt.challengeDay &&
+              <p className="practice-label">Daily challenge · {attempt.challengeDay}. Submit the quiz to complete this day.</p>}
 
             {(stage === 'ready' || stage === 'reading') && (
               <>
