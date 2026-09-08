@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { passages } from './passages'
 import { countWords } from './game'
-import { addResult, isGameStorageKey, readDaily, readHistory, readLargeText, readPassageIds, saveDaily, saveHistory, saveLargeText, savePassageIds } from './storage'
+import { addResult, isGameStorageKey, isLocalStorageArea, readDaily, readHistory, readLargeText, readPassageIds, saveDaily, saveHistory, saveLargeText, savePassageIds } from './storage'
 import { completeDaily, emptyDailyState, setStreakTracking } from './daily'
 import { isAttemptActive, transitionAttempt } from './attempt'
 import type { Attempt, AttemptAction } from './attempt'
@@ -37,7 +37,7 @@ export default function App() {
 
   useEffect(() => {
     function syncStorage(event: StorageEvent) {
-      if (event.storageArea !== window.localStorage || !isGameStorageKey(event.key)) return
+      if (!isLocalStorageArea(event.storageArea) || !isGameStorageKey(event.key)) return
       const savedHistory = readHistory()
       setHistory(savedHistory)
       setReadIds(readPassageIds(savedHistory))

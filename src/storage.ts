@@ -11,6 +11,14 @@ const READ_PASSAGES_KEY = 'between-lines-read-passages'
 export const isGameStorageKey = (key: string | null) =>
   key === null || [HISTORY_KEY, LARGE_TEXT_KEY, DAILY_KEY, READ_PASSAGES_KEY].includes(key)
 
+export function isLocalStorageArea(area: Storage | null): boolean {
+  try {
+    return area === localStorage
+  } catch {
+    return false
+  }
+}
+
 export function addResult(history: Result[], result: Result): Result[] {
   return [result, ...history].slice(0, HISTORY_LIMIT)
 }
@@ -54,7 +62,7 @@ export function readDaily(): DailyState {
     if (value && typeof value.tracking === 'boolean' &&
       (value.lastCompletedDay === null || isCalendarDay(value.lastCompletedDay)) &&
       Number.isSafeInteger(value.streak) && value.streak >= 0 &&
-      (value.tracking && value.lastCompletedDay !== null || value.streak === 0)) {
+      ((value.tracking && value.lastCompletedDay !== null) || value.streak === 0)) {
       return { tracking: value.tracking, lastCompletedDay: value.lastCompletedDay, streak: value.streak }
     }
   } catch {
