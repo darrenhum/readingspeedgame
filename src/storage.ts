@@ -8,6 +8,9 @@ const LARGE_TEXT_KEY = 'between-lines-large-text'
 const DAILY_KEY = 'between-lines-daily'
 const READ_PASSAGES_KEY = 'between-lines-read-passages'
 
+export const isGameStorageKey = (key: string | null) =>
+  key === null || [HISTORY_KEY, LARGE_TEXT_KEY, DAILY_KEY, READ_PASSAGES_KEY].includes(key)
+
 export function addResult(history: Result[], result: Result): Result[] {
   return [result, ...history].slice(0, HISTORY_LIMIT)
 }

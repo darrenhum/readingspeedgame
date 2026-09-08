@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { addResult, HISTORY_LIMIT, readDaily, readHistory, readLargeText, readPassageIds, saveDaily, saveHistory, saveLargeText, savePassageIds } from '../src/storage.ts'
+import { addResult, HISTORY_LIMIT, isGameStorageKey, readDaily, readHistory, readLargeText, readPassageIds, saveDaily, saveHistory, saveLargeText, savePassageIds } from '../src/storage.ts'
 import { emptyDailyState } from '../src/daily.ts'
 
 const result = { id: '1', passageId: 'alice', date: '2026-09-07', seconds: 60, wpm: 300, correct: 2, total: 3 }
+
+test('cross-tab synchronization recognizes game changes and storage clearing only', () => {
+  for (const key of ['between-lines-history', 'between-lines-large-text', 'between-lines-daily', 'between-lines-read-passages', null]) {
+    assert.equal(isGameStorageKey(key), true)
+  }
+  assert.equal(isGameStorageKey('unrelated-key'), false)
+})
 
 test('history is newest first, bounded, immutable, and persists with preferences separately', () => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'localStorage')
