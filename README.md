@@ -28,6 +28,8 @@ Choose **News & information** or **Classic excerpts**, then choose a passage. Th
 
 Press **Start reading** to reveal the passage, and press **End reading** below the text to hide it and stop timing. Answer all three questions before submitting. Results show words per minute, comprehension accuracy, and answer explanations separately. Both categories share the same reading journal.
 
+After submitting, expand **Show supporting text** beneath any answer to see highlighted quotations from the passage supporting the correct answer. Evidence is available for every question in both categories, including questions answered correctly, and works offline. Supporting text stays hidden during reading and the quiz.
+
 Timing uses a monotonic clock and continues in background tabs. Attempts shorter than one second cannot be submitted. Word counts use whitespace-delimited tokens (hyphenated words count as one). Repeated passages are labeled as practice: results are personal snapshots, not standardized assessments.
 
 The latest 30 results, completed passage IDs, daily challenge state, and larger-text preference are saved in local storage, on this browser/device only. Clearing browser data removes them. Storage restrictions do not prevent playing. Unfinished attempts are not saved.

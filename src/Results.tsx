@@ -30,6 +30,13 @@ export default function Results({ passage, answers, result, onHome, onPractice }
           <p>Your answer: {question.options[answers[index]]}</p>
           {answers[index] !== question.answer && <p><strong>Correct answer: {question.options[question.answer]}</strong></p>}
           <p className="muted">{question.explanation}</p>
+          <details className="answer-evidence">
+            <summary>Show supporting text for answer {index + 1}</summary>
+            <p className="muted">Evidence from the passage supporting the correct answer:</p>
+            {question.evidence.map((quote) => (
+              <blockquote key={quote}><mark>{quote}</mark></blockquote>
+            ))}
+          </details>
         </article>
       ))}
       <div className="result-actions">

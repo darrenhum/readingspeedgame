@@ -53,6 +53,24 @@ test('every passage has usable content and unambiguous answer indices', () => {
   }
 })
 
+test('every question has nonempty, unique evidence quoted exactly once from its passage', () => {
+  for (const passage of passages) {
+    for (const question of passage.questions) {
+      const context = `${passage.id}: ${question.prompt}`
+      assert.ok(Array.isArray(question.evidence), context)
+      assert.ok(question.evidence.length > 0, context)
+      assert.equal(new Set(question.evidence).size, question.evidence.length, context)
+      for (const quote of question.evidence) {
+        assert.equal(typeof quote, 'string', context)
+        assert.ok(quote.trim().length > 0, context)
+        const firstMatch = passage.text.indexOf(quote)
+        assert.notEqual(firstMatch, -1, `${context}: ${quote}`)
+        assert.equal(passage.text.indexOf(quote, firstMatch + 1), -1, `${context}: ${quote}`)
+      }
+    }
+  }
+})
+
 test('storage tolerates absent, malformed, invalid, oversized, and blocked data', () => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'localStorage')
   let stored: string | null = null

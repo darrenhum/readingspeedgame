@@ -107,6 +107,9 @@ legend { font: bold 22px/1.4 var(--serif); margin-bottom: 14px; }
 .answer-review { border-top: 1px solid var(--line); padding: 23px 0 10px; }
 .answer-review h3 { font-size: 21px; line-height: 1.4; }
 .answer-review p { font-size: 14px; }
+.answer-evidence summary { font-weight: 600; }
+.answer-evidence blockquote { margin: 12px 0 20px; padding-left: 16px; border-left: 3px solid var(--green); font: 18px/1.8 var(--serif); white-space: pre-wrap; overflow-wrap: break-word; }
+.answer-evidence mark { color: var(--ink); background: #eeeada; }
 .answer-status { font-weight: bold; color: #85501a; }
 .answer-status.correct { color: var(--green); }
 .result-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 23px 0; }

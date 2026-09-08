@@ -3,6 +3,7 @@ export type Question = {
   options: string[]
   answer: number
   explanation: string
+  evidence: string[]
 }
 
 export type PassageCategory = 'informational' | 'classics'
