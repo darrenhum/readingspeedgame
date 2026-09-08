@@ -56,3 +56,22 @@ test('reading and quiz protect attempts from navigation and PWA updates', () => 
     assert.equal(isAttemptActive(stage), stage === 'reading' || stage === 'quiz')
   }
 })
+
+test('daily identity survives reading and quiz, but is discarded when choosing normal practice', () => {
+  let attempt = transitionAttempt({ stage: 'select' }, { type: 'choose', passage, challengeDay: '2026-09-08' })
+  attempt = transitionAttempt(attempt, { type: 'start', now: 0 })
+  attempt = transitionAttempt(attempt, { type: 'finish', now: 60_000 })
+  passage.questions.forEach((question, index) => {
+    attempt = transitionAttempt(attempt, { type: 'answer', question: index, option: question.answer })
+  })
+  const submit = { type: 'submit', id: 'daily', date: '2026-09-09T00:01:00Z', readingType: 'practice' } as const
+  const completed = transitionAttempt(attempt, submit)
+  assert.equal(completed.stage, 'results')
+  if (completed.stage === 'results') {
+    assert.equal(completed.result.challengeDay, '2026-09-08')
+    assert.equal(completed.result.readingType, 'practice')
+  }
+  assert.equal(transitionAttempt(completed, submit), completed)
+  assert.deepEqual(transitionAttempt(completed, { type: 'choose', passage }), ready())
+  assert.deepEqual(transitionAttempt(completed, { type: 'home' }), { stage: 'select' })
+})

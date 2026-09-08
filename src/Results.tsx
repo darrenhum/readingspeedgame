@@ -1,6 +1,7 @@
 import type { Answers } from './attempt'
 import { countWords } from './game'
 import type { Passage, Result } from './game'
+import { readingLabels } from './progress'
 
 type Props = {
   passage: Passage
@@ -14,6 +15,8 @@ export default function Results({ passage, answers, result, onHome, onPractice }
   return (
     <>
       <p className="quiz-intro">Speed is only half the story. Here’s how your reading and recall came together.</p>
+      {result.readingType && <p className="practice-label">{readingLabels[result.readingType]}</p>}
+      {result.challengeDay && <p role="status">✓ Daily challenge completed for {result.challengeDay}.</p>}
       <div className="score-grid">
         <div className="score-card"><span className="eyebrow">READING SPEED</span><strong>{result.wpm}</strong><span>words per minute</span></div>
         <div className="score-card"><span className="eyebrow">COMPREHENSION</span><strong>{Math.round(result.correct / result.total * 100)}<small>%</small></strong><span>{result.correct} of {result.total} correct</span></div>
@@ -27,6 +30,13 @@ export default function Results({ passage, answers, result, onHome, onPractice }
           <p>Your answer: {question.options[answers[index]]}</p>
           {answers[index] !== question.answer && <p><strong>Correct answer: {question.options[question.answer]}</strong></p>}
           <p className="muted">{question.explanation}</p>
+          <details className="answer-evidence">
+            <summary>Show supporting text for answer {index + 1}</summary>
+            <p className="muted">Evidence from the passage supporting the correct answer:</p>
+            {question.evidence.map((quote) => (
+              <blockquote key={quote}><mark>{quote}</mark></blockquote>
+            ))}
+          </details>
         </article>
       ))}
       <div className="result-actions">

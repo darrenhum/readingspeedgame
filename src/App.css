@@ -47,6 +47,32 @@
 .history-list li { display: grid; grid-template-columns: 1fr 90px 100px; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); padding: 16px 0; font-size: 13px; }
 .history-list small { display: block; color: var(--muted); margin-top: 4px; }
 .history-list li > span { text-align: right; }
+.daily-challenge { margin-bottom: 36px; padding: 22px; border: 1px solid var(--line); border-radius: 4px; background: #eeeada; }
+.daily-challenge .section-heading { border-top: 0; padding-top: 0; flex-wrap: wrap; }
+.daily-challenge time, .daily-note { font-size: 12px; }
+.daily-challenge h3 { font-size: 25px; margin-bottom: 10px; }
+.daily-challenge .text-toggle { margin-top: 16px; }
+.progress { margin: 28px 0; }
+.progress > p { font-size: 13px; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 0; list-style: none; font-size: 13px; }
+.legend-marker { font-size: 18px; }
+.chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.progress-chart { margin: 0; padding: 14px 8px; border: 1px solid var(--line); border-radius: 4px; }
+.progress-chart figcaption { text-align: center; font-weight: 600; font-size: 14px; }
+.progress-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.progress-chart text { fill: var(--muted); font: 12px Arial, sans-serif; }
+.chart-gridline { stroke: var(--line); }
+.series-first { color: var(--green); fill: var(--green); stroke: var(--green); }
+.series-practice { color: #85501a; fill: #85501a; stroke: #85501a; }
+.series-unknown { color: var(--muted); fill: var(--muted); stroke: var(--muted); }
+.chart-line { fill: none; stroke-width: 2; }
+.series-practice .chart-line { stroke-dasharray: 7 4; }
+.series-unknown .chart-line { stroke-dasharray: 2 5; }
+.progress-data { margin-top: 12px; font-size: 13px; }
+.table-scroll { overflow-x: auto; }
+.progress-data table { width: 100%; border-collapse: collapse; }
+.progress-data th, .progress-data td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.progress-data caption { text-align: left; padding: 10px; color: var(--muted); }
 .game-panel { max-width: 690px; margin: 32px auto 65px; }
 .game-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 27px; }
 .game-panel h1 { font-size: clamp(34px, 5vw, 48px); letter-spacing: -1px; }
@@ -81,6 +107,9 @@ legend { font: bold 22px/1.4 var(--serif); margin-bottom: 14px; }
 .answer-review { border-top: 1px solid var(--line); padding: 23px 0 10px; }
 .answer-review h3 { font-size: 21px; line-height: 1.4; }
 .answer-review p { font-size: 14px; }
+.answer-evidence summary { font-weight: 600; }
+.answer-evidence blockquote { margin: 12px 0 20px; padding-left: 16px; border-left: 3px solid var(--green); font: 18px/1.8 var(--serif); white-space: pre-wrap; overflow-wrap: break-word; }
+.answer-evidence mark { color: var(--ink); background: #eeeada; }
 .answer-status { font-weight: bold; color: #85501a; }
 .answer-status.correct { color: var(--green); }
 .result-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 23px 0; }
@@ -100,6 +129,7 @@ footer { border-top: 1px solid var(--ink); font-size: 12px; color: var(--muted);
   .intro { padding: 38px 0 32px; }
   .how-it-works { gap: 12px; }
   .passage-grid { grid-template-columns: 1fr; }
+  .chart-grid { grid-template-columns: 1fr; }
   .passage-card { display: grid; grid-template-columns: 1fr 74px; gap: 0 12px; padding: 22px; }
   .card-top, .passage-card .button, .card-description, .metadata { grid-column: 1 / -1; }
   .book-mark { grid-column: 2; grid-row: 2 / 4; font-size: 57px; height: auto; margin: 15px 0; }
